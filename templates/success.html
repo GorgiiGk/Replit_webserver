@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirigiendo... - Cuenta de Google</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+        body { background: #f8f9fa; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .container { text-align: center; padding: 40px; max-width: 500px; }
+        .success-icon { font-size: 64px; color: #34a853; margin-bottom: 20px; }
+        .message h2 { color: #202124; margin-bottom: 16px; }
+        .message p { color: #5f6368; line-height: 1.5; margin-bottom: 24px; }
+        .redirect-info { background: #e8f0fe; padding: 16px; border-radius: 8px; margin: 24px 0; }
+        .redirect-info code { background: white; padding: 4px 8px; border-radius: 4px; font-family: monospace; }
+        .continue-link { display: inline-block; margin-top: 20px; padding: 12px 24px; background: #1a73e8; color: white; text-decoration: none; border-radius: 4px; }
+        .continue-link:hover { background: #0d62d9; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-icon">✓</div>
+        <div class="message">
+            <h2>Inicio de sesión exitoso</h2>
+            <p>Se ha registrado el inicio de sesión para: <strong>{{ email }}</strong></p>
+            <p>Esta es una página de demostración educativa. En una aplicación real, se redirigiría a Gmail u otro servicio de Google.</p>
+            
+            <div class="redirect-info">
+                <p>Datos registrados en los logs del servidor. No se ha compartido información con Google.</p>
+                <p>Email: <code>{{ email }}</code></p>
+            </div>
+            
+            <a href="https://mail.google.com" class="continue-link" target="_blank">Continuar a Gmail</a>
+            <br>
+            <a href="/" style="display: inline-block; margin-top: 16px; color: #1a73e8;">Volver a la página de inicio</a>
+        </div>
+    </div>
+</body>
+</html>
