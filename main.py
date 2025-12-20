@@ -7,7 +7,11 @@ import uvicorn
 
 # --- Configuration ---
 app = FastAPI()
-templates = Jinja2Templates(directory="templates")
+
+
+# This creates the absolute path to your templates folder
+template_dir = os.path.join(os.path.dirname(__file__), "templates")
+templates = Jinja2Templates(directory=template_dir)
 
 # Setup logging to print to console (visible in Back4app logs)
 logging.basicConfig(
