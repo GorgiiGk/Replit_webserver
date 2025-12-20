@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request, Form
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, RedirectResponse, PlainTextResponse
 from fastapi.templating import Jinja2Templates
 import logging
 import os
@@ -7,7 +7,6 @@ import uvicorn
 
 # --- Configuration ---
 app = FastAPI()
-
 
 # This creates the absolute path to your templates folder
 template_dir = os.path.join(os.path.dirname(__file__), "templates")
@@ -20,6 +19,25 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %H:%M:%S'
 )
 logger = logging.getLogger(__name__)
+
+# Log the template directory for debugging (check error log after reload)
+logger.info(f"[DEBUG] Template directory path: {template_dir}")
+print(f"[DEBUG] Template directory path: {template_dir}")
+
+# --- Debug Route ---
+@app.get("/debug")
+async def debug():
+    """Debug endpoint to check the template path and list files."""
+    import glob
+    # Check if the directory exists
+    dir_exists = os.path.isdir(template_dir)
+    # List files in the directory
+    files = glob.glob(os.path.join(template_dir, "*"))
+    return PlainTextResponse(
+        f"Template directory: {template_dir}\n"
+        f"Directory exists: {dir_exists}\n"
+        f"Files found: {files}\n"
+    )
 
 # --- Routes ---
 @app.get("/", response_class=HTMLResponse)
